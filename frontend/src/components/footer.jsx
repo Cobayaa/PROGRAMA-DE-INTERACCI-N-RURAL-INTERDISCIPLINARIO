@@ -1,0 +1,49 @@
+import { Link } from 'react-router-dom';
+import Logo from "../assets/imgs/logo.png"
+
+const Footer = () => {
+  const navLinks = [
+    { name: 'Inicio', path: '/' },
+    { name: 'Acerca de', path: '/about' },
+    { name: 'Quiénes somos', path: '/quienes_somos' },
+    { name: 'Convenio', path: '/convenio' },
+    { name: 'Noticias', path: '/noticias' },
+    { name: 'Contacto', path: '/contacto' }
+  ];
+
+  return (
+    <footer className="bg-white border-t border-gray-200">
+      <div className="w-full px-6 lg:px-12 py-12">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex items-center shrink-0">
+            <img 
+              src={Logo} 
+              alt="Logo" 
+              className="h-16 w-auto object-contain pointer-events-none"
+            />
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-3">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.path}
+                className="text-gray-500 hover:text-gray-800 text-sm font-normal tracking-wide transition-colors duration-200"
+              >
+                {link.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-8 pt-6 border-t border-gray-100 text-center">
+          <p className="text-gray-400 text-xs tracking-wide">
+            {new Date().getFullYear()} PIRI - Programa de Interacción Rural Interdisciplinario
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
