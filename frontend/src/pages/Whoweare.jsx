@@ -1,13 +1,56 @@
+import { useState, useEffect } from "react";
+import "../index.css";
+
 const Whoweare = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 200);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="bg-white py-20 px-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="w-48 h-10 bg-gray-200 animate-pulse mx-auto"></div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-10">
+            <div>
+              <div className="w-24 h-7 bg-gray-200 animate-pulse mb-6"></div>
+              <div className="space-y-4">
+                <div className="w-full h-20 bg-gray-200 animate-pulse"></div>
+                <div className="w-full h-24 bg-gray-200 animate-pulse"></div>
+                <div className="w-11/12 h-16 bg-gray-200 animate-pulse"></div>
+              </div>
+            </div>
+
+            <div>
+              <div className="w-24 h-7 bg-gray-200 animate-pulse mb-6"></div>
+              <div className="space-y-4">
+                <div className="w-full h-20 bg-gray-200 animate-pulse"></div>
+                <div className="w-full h-24 bg-gray-200 animate-pulse"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="bg-white py-20 px-8">
+    <div className="bg-white py-20 px-8 font-Raleway">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-normal text-black tracking-wide">Quiénes Somos</h1>
+          <h1 className="text-4xl font-normal text-black">Quiénes Somos</h1>
         </div>
 
         <div className="grid md:grid-cols-2 gap-10">
-          <div className="bg-white">
+          <div>
             <h2 className="text-2xl font-normal text-gray-800 mb-6 tracking-wide">Misión</h2>
             <div className="text-black text-base leading-relaxed space-y-4">
               <p>
@@ -22,7 +65,7 @@ const Whoweare = () => {
             </div>
           </div>
 
-          <div className="bg-white">
+          <div>
             <h2 className="text-2xl font-normal text-gray-800 mb-6 tracking-wide">Visión</h2>
             <div className="text-black text-base leading-relaxed space-y-4">
               <p>

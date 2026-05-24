@@ -19,7 +19,7 @@ const Footer = () => {
             <img 
               src={Logo} 
               alt="Logo" 
-              className="h-16 w-auto object-contain pointer-events-none"
+              className="h-60 rounded-full p-0 w-auto object-contain pointer-events-none"
             />
           </div>
 
@@ -38,7 +38,7 @@ const Footer = () => {
 
         <div className="mt-8 pt-6 border-t border-gray-100 text-center">
           <p className="text-gray-400 text-xs tracking-wide">
-            {new Date().getFullYear()} PIRI - Programa de Interacción Rural Interdisciplinario
+            {new Date().getFullYear()} PIRI - Programa Interdisciplinario Rural de Interacción
           </p>
         </div>
       </div>

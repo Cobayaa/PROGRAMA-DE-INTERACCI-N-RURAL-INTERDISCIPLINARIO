@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import Uniputumayo1 from "../assets/imgs/itp.png"
 import Uniputumayo2 from "../assets/imgs/uniputumayo.jpg"
+import "../index.css";
 
 const Slider = ({ slides, autoPlay = true, interval = 8000 }) => {
   const defaultSlides = [
@@ -31,7 +31,7 @@ const Slider = ({ slides, autoPlay = true, interval = 8000 }) => {
   }, [autoPlay, interval]);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <div className="relative w-full font-Raleway h-screen overflow-hidden">
       {slidesData.map((slide, index) => (
         <div
           key={index}
@@ -50,15 +50,14 @@ const Slider = ({ slides, autoPlay = true, interval = 8000 }) => {
           </div>
           <div className="relative h-full flex items-center px-4 sm:px-6 md:px-12 lg:px-20">
             <div className="max-w-2xl">
-              <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-white mb-4 tracking-tight leading-none">
+              <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-white mb-4">
                 PIRI
               </h1>
-              <div className="w-20 h-0.5 bg-white mb-6"></div>
-              <p className="text-lg sm:text-xl md:text-2xl text-white font-light leading-relaxed">
-                PROGRAMA DE INTERACCIÓN RURAL
+              <p className="text-lg sm:text-xl md:text-2xl text-white">
+                PROGRAMA INTERDISCIPLINARIO
               </p>
-              <p className="text-lg sm:text-xl md:text-2xl text-white font-light leading-relaxed mt-1">
-                INTERDISCIPLINARIO
+              <p className="text-lg sm:text-xl md:text-2xl text-white mt-1">
+                RURAL DE INTERACCIÓN
               </p>
             </div>
           </div>

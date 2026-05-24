@@ -90,6 +90,9 @@ import c22 from "../assets/imgs/Fotos_Pro_Planadas_Alvaro/c22.jpeg"
 import c23 from "../assets/imgs/Fotos_Pro_Planadas_Alvaro/c23.jpeg"
 import c24 from "../assets/imgs/Fotos_Pro_Planadas_Alvaro/c24.jpeg"
 import Footer from '../components/footer';
+import "../index.css";
+import { useState, useEffect } from "react";
+
 
 const Home = () => {
   const images = [Primera, Segunda, Tercera, Cuarta, Quinta, Sexta, Septima, Octava, Novena, Decima, Undecima, Duodecima];
@@ -97,29 +100,81 @@ const Home = () => {
   const images4 = [B40, B41, B42, B43, B44, B45, B46, B47, B48, B49, B50, B51, B52, B53, B54, B55];
   const images3 = [c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22, c23, c24];
 
- return (
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 200);
+    return () => clearTimeout(timer);
+  }, [])
+
+  if (loading) {
+    return (
+      <div>
+        <div className="w-full h-[500px] bg-gray-100 animate-pulse"></div>
+        
+        <div className="max-w-6xl mx-auto px-5 py-16">
+          <div className="mb-10">
+            <div className="w-64 h-8 bg-gray-200 animate-pulse"></div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-gray-200 aspect-video animate-pulse"></div>
+            <div className="bg-gray-200 aspect-video animate-pulse"></div>
+          </div>
+        </div>
+
+        {[1, 2, 3, 4].map((section) => (
+          <div key={section} className="border-t border-gray-200">
+            <div className="max-w-6xl mx-auto px-5 py-16">
+              <div className="w-96 h-7 bg-gray-200 animate-pulse mb-6"></div>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+                  <div key={item} className="bg-gray-200 aspect-square animate-pulse"></div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+        
+        <div className="border-t border-gray-200">
+          <div className="max-w-6xl mx-auto px-5 py-16">
+            <div className="w-80 h-7 bg-gray-200 animate-pulse mb-6"></div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+                <div key={item} className="bg-gray-200 aspect-square animate-pulse"></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+return (
     <div>
       <Slider />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-light text-gray-800 tracking-wide">
-            IMPACTOS EN COMUNIDADES
+      
+      <div className="max-w-6xl mx-auto font-Raleway px-5 py-16">
+        <div className="mb-10">
+          <h1 className="text-3xl font-normal text-gray-800">
+            Impactos en comunidades
           </h1>
         </div>
         
-        <div className="space-y-8">
-          <div className="aspect-video bg-gray-100 overflow-hidden shadow-sm border border-gray-200">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-gray-100">
             <iframe 
               src="https://drive.google.com/file/d/1ljLK3tAjwFHfRZ4tZi0b2szCn9TMmEtm/preview"
-              className="w-full h-full"
+              className="w-full aspect-video"
               allow="autoplay"
               allowFullScreen
             ></iframe>
           </div>
-          <div className="aspect-video bg-gray-100 overflow-hidden shadow-sm border border-gray-200">
+          <div className="bg-gray-100">
             <iframe 
               src="https://drive.google.com/file/d/1BpmADEeQqvvla1TKdOe4wskG2OgG2trL/preview"
-              className="w-full h-full"
+              className="w-full aspect-video"
               allow="autoplay"
               allowFullScreen
             ></iframe>
@@ -127,22 +182,20 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="bg-gray-50 border-t border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-gray-800 tracking-wide">
-              Adelaida Chindoy ( Resguardo Inga de Condagua )
-            </h2>
-          </div>
+      <div className="border-t border-gray-200">
+        <div className="max-w-6xl mx-auto px-5 py-16">
+          <h2 className="text-xl font-medium text-gray-800 mb-6">
+            Adelaida Chindoy (Resguardo Inga de Condagua)
+          </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {images.map((image, index) => (
-              <div key={index} className="overflow-hidden bg-white border border-gray-200 shadow-sm">
-                <div className="aspect-[4/3]">
+              <div key={index} className="bg-gray-100">
+                <div className="aspect-square">
                   <img 
                     src={image} 
-                    alt={`Galería ${index + 1}`}
-                    className="w-full h-full object-cover pointer-events-none"
+                    alt=""
+                    className="w-full h-full object-cover"
                   />
                 </div>
               </div>
@@ -151,22 +204,20 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="bg-gray-50 border-t border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-gray-800 tracking-wide">
-              Julio Samboni y Ofelia Mutumbajoy ( Resguardo Inga de Condagua )
-            </h2>
-          </div>
+      <div className="border-t border-gray-200">
+        <div className="max-w-6xl mx-auto px-5 py-16">
+          <h2 className="text-xl font-medium text-gray-800 mb-6">
+            Julio Samboni y Ofelia Mutumbajoy (Resguardo Inga de Condagua)
+          </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {images2.map((image, index) => (
-              <div key={index} className="overflow-hidden bg-white border border-gray-200 shadow-sm">
-                <div className="aspect-[4/3]">
+              <div key={index} className="bg-gray-100">
+                <div className="aspect-square">
                   <img 
                     src={image} 
-                    alt={`Galería ${index + 1}`}
-                    className="w-full h-full object-cover pointer-events-none"
+                    alt=""
+                    className="w-full h-full object-cover"
                   />
                 </div>
               </div>
@@ -175,22 +226,19 @@ const Home = () => {
         </div>
       </div>
       
-      <div className="bg-gray-50 border-t border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-gray-800 tracking-wide">
-              Maloka Lugar sagrado Tun Rumi Resguardo Inga de Condagua
-            </h2>
-          </div>
+      <div className="border-t border-gray-200">
+        <div className="max-w-6xl mx-auto px-5 py-16">
+          <h2 className="text-xl font-medium text-gray-800 mb-6">
+            Maloka Lugar sagrado Tun Rumi Resguardo Inga de Condagua
+          </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {images4.map((image, index) => (
-              <div key={index} className="overflow-hidden bg-white border border-gray-200 shadow-sm">
-                <div className="aspect-[4/3]">
+              <div key={index} className="bg-gray-100">
+                <div className="aspect-square">
                   <img 
                     src={image} 
-                    alt={`Galería ${index + 1}`}
-                    className="w-full h-full object-cover pointer-events-none"
+                    className="w-full h-full object-cover"
                   />
                 </div>
               </div>
@@ -199,22 +247,20 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="bg-gray-50 border-t border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-gray-800 tracking-wide">
-              Alvaro Julian Rodriguez ( V/Planadas)
-            </h2>
-          </div>
+      <div className="border-t border-gray-200">
+        <div className="max-w-6xl mx-auto px-5 py-16">
+          <h2 className="text-xl font-medium text-gray-800 mb-6">
+            Alvaro Julian Rodriguez (V/Planadas)
+          </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {images3.map((image, index) => (
-              <div key={index} className="overflow-hidden bg-white border border-gray-200 shadow-sm">
-                <div className="aspect-[4/3]">
+              <div key={index} className="bg-gray-100">
+                <div className="aspect-square">
                   <img 
                     src={image} 
-                    alt={`Galería ${index + 1}`}
-                    className="w-full h-full object-cover pointer-events-none"
+                    alt=""
+                    className="w-full h-full object-cover"
                   />
                 </div>
               </div>
@@ -222,9 +268,10 @@ const Home = () => {
           </div>
         </div>
       </div>
+      
       <Footer/>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
