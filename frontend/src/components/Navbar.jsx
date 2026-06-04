@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuthApi } from '../Api/AuthApi.js';
 import Logo from "../assets/imgs/logo.png"
 import "../index.css";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { isAuthenticated, isCheckingAuth } = useAuthApi();
+
+  if (isCheckingAuth || isAuthenticated) return null;
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -88,6 +92,22 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
+            <div className="pt-3 space-y-2 border-t border-gray-200">
+              <Link
+                to="/login"
+                onClick={() => setIsOpen(false)}
+                className="block px-3 py-2 text-base text-gray-700 hover:text-black hover:bg-gray-50 rounded-md"
+              >
+                Iniciar Sesión
+              </Link>
+              <Link
+                to="/register"
+                onClick={() => setIsOpen(false)}
+                className="block px-3 py-2 text-base bg-black text-white rounded-md hover:bg-gray-800 text-center"
+              >
+                Registrarse
+              </Link>
+            </div>
           </div>
         </div>
       </div>

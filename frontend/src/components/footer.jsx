@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
+import { useAuthApi } from '../Api/AuthApi';
 import Logo from "../assets/imgs/logo.png"
 
 const Footer = () => {
+  const { isAuthenticated } = useAuthApi();
+  
   const navLinks = [
     { name: 'Inicio', path: '/' },
     { name: 'Acerca de', path: '/about' },
@@ -33,6 +36,15 @@ const Footer = () => {
                 {link.name}
               </Link>
             ))}
+            
+            {!isAuthenticated && (
+              <Link
+                to="/login"
+                className="text-gray-400 hover:text-gray-600 text-sm font-normal tracking-wide transition-colors duration-200 border-l border-gray-200 pl-8 ml-2"
+              >
+                Editor
+              </Link>
+            )}
           </div>
         </div>
 
