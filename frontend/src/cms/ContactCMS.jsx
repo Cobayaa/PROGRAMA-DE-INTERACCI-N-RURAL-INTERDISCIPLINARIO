@@ -22,7 +22,27 @@ const ContactCMS = () => {
     const fetchContactInfo = async () => {
         try {
             const response = await axios.get(`${import.meta.env.VITE_API_URL}/contact`);
-            setContactInfo(response.data);
+            const data = response.data;
+            
+            setContactInfo({
+                address: {
+                    street: data.address?.street || "",
+                    city: data.address?.city || "",
+                    country: data.address?.country || ""
+                },
+                phone: data.phone || "",
+                email: data.email || "",
+                schedule: {
+                    days: data.schedule?.days || "",
+                    hours: data.schedule?.hours || ""
+                },
+                socialMedia: {
+                    facebook: data.socialMedia?.facebook || "",
+                    instagram: data.socialMedia?.instagram || "",
+                    twitter: data.socialMedia?.twitter || ""
+                },
+                mapUrl: data.mapUrl || ""
+            });
         } catch (error) {
             console.error("Error:", error);
         }
@@ -30,18 +50,18 @@ const ContactCMS = () => {
 
     const handleChange = (e, section, field) => {
         if (section) {
-            setContactInfo({
-                ...contactInfo,
+            setContactInfo(prev => ({
+                ...prev,
                 [section]: {
-                    ...contactInfo[section],
+                    ...prev[section],
                     [field]: e.target.value
                 }
-            });
+            }));
         } else {
-            setContactInfo({
-                ...contactInfo,
+            setContactInfo(prev => ({
+                ...prev,
                 [e.target.name]: e.target.value
-            });
+            }));
         }
     };
 
@@ -49,13 +69,26 @@ const ContactCMS = () => {
         e.preventDefault();
         setLoading(true);
         try {
+            const authToken = token || localStorage.getItem("token");
+            
+            if (!authToken) {
+                setMessage("No hay sesión activa");
+                setLoading(false);
+                return;
+            }
+            
             await axios.put(`${import.meta.env.VITE_API_URL}/contact`, contactInfo, {
-                headers: { Authorization: `Bearer ${token}` }
+                headers: { 
+                    Authorization: `Bearer ${authToken}`,
+                    'Content-Type': 'application/json'
+                }
             });
             setMessage("Información actualizada correctamente");
             setTimeout(() => setMessage(""), 3000);
         } catch (error) {
-            setMessage("Error al actualizar");
+            console.error("Error detallado:", error.response?.data);
+            setMessage(error.response?.data?.message || "Error al actualizar");
+            setTimeout(() => setMessage(""), 3000);
         } finally {
             setLoading(false);
         }
@@ -66,7 +99,7 @@ const ContactCMS = () => {
             <h1 className="text-3xl font-bold mb-6">Editar Información de Contacto</h1>
             
             {message && (
-                <div className={`p-4 mb-4 rounded ${message.includes("Error") ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}>
+                <div className={`p-4 mb-4 rounded ${message.includes("Error") || message.includes("Error") ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}>
                     {message}
                 </div>
             )}

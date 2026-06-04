@@ -74,7 +74,6 @@ const Whoweare = () => {
                 </div>
             )}
 
-            {/* Descripción general */}
             {content.description && (
                 <div className="max-w-4xl mx-auto px-4 py-8">
                     <div 
@@ -84,7 +83,6 @@ const Whoweare = () => {
                 </div>
             )}
 
-            {/* Secciones dinámicas */}
             {content.sections && content.sections.length > 0 ? (
                 <div className="max-w-7xl mx-auto px-4 py-16 md:py-20">
                     {content.sections.length === 1 ? (

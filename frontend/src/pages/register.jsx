@@ -26,7 +26,6 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Enviando formulario..."); 
     setError("");
     setSuccess("");
     

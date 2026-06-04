@@ -57,4 +57,44 @@ export const updateUserRole = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
+
+};
+
+export const deleteUser = async (req, res) => {
+    try {
+        const user = await User.findByIdAndDelete(req.params.userId);
+
+        if(!user) {
+            return res.status(404).json({ message: "Usuario no encontrado" });
+        }
+        res.json({ 
+            success: true, 
+            message: "Usuario eliminado exitosamente" 
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const updateUserData = async (req, res) => {
+    try {
+        const { name, email, password } = req.body;
+        const user = await User.findById(req.user._id);
+
+        if (!user){
+            return res.status(404).json({ message: "Usuario no encontrado" });
+        }
+        if (name) user.name = name;
+        if (email) user.email = email;
+        if (password) user.password = password;
+
+        const updatedUser = await user.save();
+
+        const userWithoutPassword = updatedUser.toObject();
+        delete userWithoutPassword.password;
+
+        res.json({ success: true, user: updatedUser });
+    }catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };

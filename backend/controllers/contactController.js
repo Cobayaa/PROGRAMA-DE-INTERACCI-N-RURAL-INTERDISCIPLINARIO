@@ -4,7 +4,28 @@ import nodemailer from "nodemailer";
 export const getContactInfo = async (req, res) => {
     try {
         const info = await ContactInfo.getInfo();
-        res.json(info);
+        
+        const formattedInfo = {
+            address: {
+                street: info.address?.street || "",
+                city: info.address?.city || "",
+                country: info.address?.country || ""
+            },
+            phone: info.phone || "",
+            email: info.email || "",
+            schedule: {
+                days: info.schedule?.days || "",
+                hours: info.schedule?.hours || ""
+            },
+            socialMedia: {
+                facebook: info.socialMedia?.facebook || "",
+                instagram: info.socialMedia?.instagram || "",
+                twitter: info.socialMedia?.twitter || ""
+            },
+            mapUrl: info.mapUrl || ""
+        };
+        
+        res.json(formattedInfo);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -16,7 +37,7 @@ export const updateContactInfo = async (req, res) => {
         const updated = await ContactInfo.findByIdAndUpdate(
             info._id,
             { ...req.body, updatedAt: Date.now() },
-            { new: true }
+            { returnDocument: 'after' }
         );
         res.json({ success: true, data: updated });
     } catch (error) {

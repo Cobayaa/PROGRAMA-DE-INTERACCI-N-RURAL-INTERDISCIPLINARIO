@@ -54,7 +54,7 @@ export const login = async (req, res) => {
         
         if (!user.isActivated) {
             return res.status(401).json({ 
-                message: "Cuenta no activada. Contacta al administrador." 
+                message: "Tu cuenta aún no está activada." 
             });
         }
         

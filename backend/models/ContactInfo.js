@@ -2,23 +2,23 @@ import mongoose from "mongoose";
 
 const contactInfoSchema = new mongoose.Schema({
     address: {
-        street: { type: String, },
-        city: { type: String, },
-        country: { type: String, },
+        street: { type: String, default: "" },
+        city: { type: String, default: "" },
+        country: { type: String, default: "" }
     },
-    phone: { type: String, },
-    email: { type: String, },
+    phone: { type: String, default: "" },
+    email: { type: String, default: "" },
     schedule: {
-        days: { type: String, },
-        hours: { type: String, },
+        days: { type: String, default: "" },
+        hours: { type: String, default: "" }
     },
     socialMedia: {
         facebook: { type: String, default: "" },
         instagram: { type: String, default: "" },
-        twitter: { type: String, default: "" },
+        twitter: { type: String, default: "" }
     },
     mapUrl: { type: String, default: "" },
-    updatedAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now }
 });
 
 contactInfoSchema.statics.getInfo = async function() {

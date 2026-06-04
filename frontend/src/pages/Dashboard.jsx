@@ -1,6 +1,12 @@
-import React from 'react';
 import { useAuthApi } from '../Api/AuthApi.js';
 import { useNavigate, Link } from 'react-router-dom';
+import { 
+  LogOut, 
+  Users, 
+  FileText, 
+  Newspaper, 
+  Phone, 
+} from 'lucide-react';
 
 const Dashboard = () => {
   const { user, logout } = useAuthApi();
@@ -11,112 +17,76 @@ const Dashboard = () => {
     navigate('/login');
   };
 
+  const menuItems = {
+    admin: [
+      { icon: Users, label: "Usuarios", path: "/cms/usuarios", desc: "Activar cuentas, cambiar roles", color: "blue" },
+      { icon: FileText, label: "Contenido", path: "/cms/contenido", desc: "Editar páginas del sitio", color: "purple" },
+      { icon: Newspaper, label: "Noticias", path: "/cms/noticias", desc: "Crear y gestionar noticias", color: "green" },
+      { icon: Phone, label: "Contacto", path: "/cms/contacto", desc: "Editar información de contacto", color: "orange" }
+    ],
+    user: [
+      { icon: FileText, label: "Contenido", path: "/cms/contenido", desc: "Editar páginas del sitio", color: "purple" },
+      { icon: Newspaper, label: "Noticias", path: "/cms/noticias", desc: "Crear y gestionar noticias", color: "green" },
+      { icon: Phone, label: "Contacto", path: "/cms/contacto", desc: "Editar información de contacto", color: "orange" }
+    ]
+  };
+
+  const currentMenu = user?.role === 'admin' ? menuItems.admin : menuItems.user;
+
+  const getColorClasses = (color) => {
+    const colors = {
+      blue: { bg: "bg-gray-50", border: "border-gray-200", icon: "text-gray-600"},
+      purple: { bg: "bg-gray-50", border: "border-gray-200", icon: "text-gray-600"},
+      green: { bg: "bg-gray-50", border: "border-gray-200", icon: "text-gray-600"},
+      orange: { bg: "bg-gray-50", border: "border-gray-200", icon: "text-gray-600"}
+    };
+    return colors[color] || colors.blue;
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex justify-between items-center">
-            <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+    <div className="min-h-screen bg-gray-50">
+      <header className="bg-white border-b sticky top-0 z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex flex-col items-left">
+              <h2 className="text-2xl font-semibold text-gray-900">Bienvenido, {user?.name}</h2>
+              <span className="text-sm text-gray-600">{user?.email}</span>
+               <span className="text-sm text-gray-600">{user?.role === 'admin' ? 'Administrador' : 'Usuario'}</span>
+            </div>
             <button
               onClick={handleLogout}
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+              className="flex items-center space-x-2 px-3 py-2 text-red-600 rounded-lg"
             >
-              Cerrar Sesión
+              <LogOut className="w-4 h-4" />
+              <span className="text-sm">Cerrar Sesión</span>
             </button>
           </div>
         </div>
-      </div>
+      </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white shadow rounded-lg p-6">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            Bienvenido, {user?.name} 👋
-          </h2>
-          
-          <div className="space-y-3">
-            <p className="text-gray-600">
-              <span className="font-medium">Email:</span> {user?.email}
-            </p>
-            <p className="text-gray-600">
-              <span className="font-medium">Rol:</span> {user?.role === 'admin' ? 'Administrador' : 'Colaborador'}
-            </p>
-            <p className="text-gray-600">
-              <span className="font-medium">Estado:</span>{' '}
-              <span className="text-green-600">✓ Cuenta activa</span>
-            </p>
-          </div>
-
-          {/* Panel de Administrador */}
-          {user?.role === 'admin' && (
-            <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-              <h3 className="text-lg font-semibold text-blue-800 mb-3">
-                👑 Panel de Administrador
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <Link 
-                  to="/cms/usuarios"
-                  className="bg-white p-3 rounded-lg border border-blue-200 hover:shadow-md transition"
-                >
-                  <div className="font-semibold text-blue-800">👥 Usuarios</div>
-                  <p className="text-sm text-blue-600">Activar cuentas, cambiar roles</p>
-                </Link>
-                <Link 
-                  to="/cms/contenido"
-                  className="bg-white p-3 rounded-lg border border-blue-200 hover:shadow-md transition"
-                >
-                  <div className="font-semibold text-blue-800">📝 Contenido</div>
-                  <p className="text-sm text-blue-600">Editar páginas (Inicio, Quiénes Somos, etc.)</p>
-                </Link>
-                <Link 
-                  to="/cms/noticias"
-                  className="bg-white p-3 rounded-lg border border-blue-200 hover:shadow-md transition"
-                >
-                  <div className="font-semibold text-blue-800">📰 Noticias</div>
-                  <p className="text-sm text-blue-600">Crear, editar y publicar noticias</p>
-                </Link>
-                <Link 
-                  to="/cms/contacto"
-                  className="bg-white p-3 rounded-lg border border-blue-200 hover:shadow-md transition"
-                >
-                  <div className="font-semibold text-blue-800">📞 Contacto</div>
-                  <p className="text-sm text-blue-600">Editar información de contacto</p>
-                </Link>
-              </div>
-            </div>
-          )}
-
-          {user?.role === 'user' && (
-            <div className="mt-6 p-4 bg-green-50 rounded-lg">
-              <h3 className="text-lg font-semibold text-green-800 mb-3">
-                🤝 Panel de Colaborador
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <Link 
-                  to="/cms/contenido"
-                  className="bg-white p-3 rounded-lg border border-green-200 hover:shadow-md transition"
-                >
-                  <div className="font-semibold text-green-800">📝 Contenido</div>
-                  <p className="text-sm text-green-600">Editar páginas (Inicio, Quiénes Somos, etc.)</p>
-                </Link>
-                <Link 
-                  to="/cms/noticias"
-                  className="bg-white p-3 rounded-lg border border-green-200 hover:shadow-md transition"
-                >
-                  <div className="font-semibold text-green-800">📰 Noticias</div>
-                  <p className="text-sm text-green-600">Crear, editar y publicar noticias</p>
-                </Link>
-                <Link 
-                  to="/cms/contacto"
-                  className="bg-white p-3 rounded-lg border border-green-200 hover:shadow-md transition"
-                >
-                  <div className="font-semibold text-green-800">📞 Contacto</div>
-                  <p className="text-sm text-green-600">Editar información de contacto</p>
-                </Link>
-              </div>
-            </div>
-          )}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {currentMenu.map((item, idx) => {
+            const Icon = item.icon;
+            const colors = getColorClasses(item.color);
+            return (
+              <Link
+                key={idx}
+                to={item.path}
+                className={`group ${colors.bg} border ${colors.border} rounded-xl p-6`}
+              >
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h3 className={`text-lg font-semibold ${colors.icon}`}>{item.label}</h3>
+                    <p className="text-gray-600 text-sm mt-1">{item.desc}</p>
+                  </div>
+                  <Icon className={`w-8 h-8 ${colors.icon} opacity-75 transition-opacity`} />
+                </div>
+              </Link>
+            );
+          })}
         </div>
-      </div>
+      </main>
     </div>
   );
 };
