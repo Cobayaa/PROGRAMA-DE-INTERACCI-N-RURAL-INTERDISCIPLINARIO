@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuthApi } from "../Api/AuthApi";
+import FileUploader from "../components/FileUploader";
+
 
 const ContentCMS = () => {
     const [pages, setPages] = useState({
@@ -158,7 +160,6 @@ const ContentCMS = () => {
 
     return (
         <div className="min-h-screen bg-gray-50">
-            {/* Header institucional */}
             <div className="bg-white border-b border-gray-200">
                 <div className="max-w-7xl mx-auto px-6 py-6">
                     <h1 className="text-2xl font-semibold text-gray-900">Gestor de Contenidos</h1>
@@ -293,7 +294,6 @@ const ContentCMS = () => {
                         </div>
                     )}
 
-                    {/* Módulo: Imagen Principal */}
                     {activeModule === "hero" && (
                         <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                             <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
@@ -312,6 +312,18 @@ const ContentCMS = () => {
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 font-mono text-sm"
                                         placeholder="https://ejemplo.com/banner-principal.jpg"
                                     />
+                                    <div className="mt-2">
+                                        <FileUploader
+                                            onUploadComplete={(data) => {
+                                                handleChange("heroImage", data.url);
+                                            }}
+                                            onError={(error) => {
+                                                setMessage({ type: "error", text: error });
+                                                setTimeout(() => setMessage(""), 3000);
+                                            }}
+                                            accept="image/*,video/*"
+                                        />
+                                    </div>
                                     <p className="text-xs text-gray-400 mt-1">Recomendación: usar imágenes en formato JPG o PNG, tamaño 1920x1080px</p>
                                 </div>
                                 {pages[selectedPage]?.heroImage && (
@@ -334,7 +346,6 @@ const ContentCMS = () => {
                         </div>
                     )}
 
-                    {/* Módulo: Secciones */}
                     {activeModule === "sections" && (
                         <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                             <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
@@ -435,29 +446,49 @@ const ContentCMS = () => {
                                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 font-mono text-sm resize-y"
                                                     />
                                                 </div>
-                                                <div>
-                                                    <label className="block text-xs font-medium text-gray-500 mb-1">Imagen (opcional)</label>
-                                                    <input
-                                                        type="text"
-                                                        placeholder="https://ejemplo.com/imagen-seccion.jpg"
-                                                        value={section.image || ""}
-                                                        onChange={(e) => handleSectionChange(index, "image", e.target.value)}
-                                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 text-sm font-mono"
-                                                    />
-                                                    {section.image && (
-                                                        <div className="mt-3">
-                                                            <img 
-                                                                src={section.image} 
-                                                                alt="Vista previa"
-                                                                className="h-32 w-auto object-cover rounded-md border border-gray-200"
-                                                                onError={(e) => {
-                                                                    e.target.src = "https://via.placeholder.com/200x120?text=Imagen+no+encontrada";
-                                                                    e.target.onerror = null;
+                                                    <div>
+                                                        <label className="block text-xs font-medium text-gray-500 mb-1">Imagen o Video</label>
+                                                        <input
+                                                            type="text"
+                                                            placeholder="https://ejemplo.com/archivo.jpg o .mp4"
+                                                            value={section.image || ""}
+                                                            onChange={(e) => handleSectionChange(index, "image", e.target.value)}
+                                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 text-sm font-mono"
+                                                        />
+                                                        <div className="mt-2">
+                                                            <FileUploader
+                                                                onUploadComplete={(data) => {
+                                                                    handleSectionChange(index, "image", data.url);
                                                                 }}
+                                                                onError={(error) => {
+                                                                    setMessage({ type: "error", text: error });
+                                                                    setTimeout(() => setMessage(""), 3000);
+                                                                }}
+                                                                accept="image/*,video/*"
                                                             />
                                                         </div>
-                                                    )}
-                                                </div>
+                                                        {section.image && (
+                                                            <div className="mt-3">
+                                                                {section.image.match(/\.(mp4|webm|mov)$/i) ? (
+                                                                    <video 
+                                                                        src={section.image} 
+                                                                        className="h-32 w-auto object-cover rounded-md border border-gray-200"
+                                                                        controls
+                                                                    />
+                                                                ) : (
+                                                                    <img 
+                                                                        src={section.image} 
+                                                                        alt="Vista previa"
+                                                                        className="h-32 w-auto object-cover rounded-md border border-gray-200"
+                                                                        onError={(e) => {
+                                                                            e.target.src = "https://via.placeholder.com/200x120?text=Imagen+no+encontrada";
+                                                                            e.target.onerror = null;
+                                                                        }}
+                                                                    />
+                                                                )}
+                                                            </div>
+                                                        )}
+                                                    </div>
                                             </div>
                                         </div>
                                     ))}

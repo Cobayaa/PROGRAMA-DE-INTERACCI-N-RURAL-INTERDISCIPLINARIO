@@ -2,16 +2,16 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import { useAuthApi } from "./Api/AuthApi.js";
 import Navbar from "./components/Navbar";
 
-import Home from "./pages/Home";
-import Whoweare from "./pages/Whoweare";
-import News from "./pages/News";
-import Contact from "./pages/Contact";
+import Home from "./pages/Home.jsx";
+import Whoweare from "./pages/Whoweare.jsx";
+import News from "./pages/News.jsx";
+import Contact from "./pages/Contact.jsx";
 import Login from "./pages/login.jsx";
 import About from "./pages/About.jsx";
 import Register from "./pages/register.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
+import Convenio from "./pages/Convenio.jsx";
 
-// ------------- cms components -------------
 import ContactCMS from "./cms/ContactCMS.jsx";
 import UsersCMS from "./cms/UsersCMS.jsx";
 import ContentCMS from "./cms/ContentCMS.jsx";
@@ -53,6 +53,7 @@ const App = () => {
         <Route path="/noticias" element={<News />} />
         <Route path="/contacto" element={<Contact />} />
         <Route path="/about" element={<About />} />
+        <Route path="/convenio" element={<Convenio />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         

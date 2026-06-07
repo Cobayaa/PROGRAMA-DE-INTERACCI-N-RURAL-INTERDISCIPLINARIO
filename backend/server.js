@@ -10,6 +10,8 @@ import authRoutes from "./routes/authRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import contentRoutes from "./routes/contentRoutes.js";
+import newsRoutes from "./routes/newsRoutes.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -46,6 +48,10 @@ app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/content", contentRoutes);
+app.use("/api/news", newsRoutes);
+app.use("/api/upload", uploadRoutes);
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 
 if (isProduction) {
   const frontendPath = path.join(__dirname, "../frontend/dist");
